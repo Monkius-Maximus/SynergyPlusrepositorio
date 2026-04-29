@@ -1,721 +1,494 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SynergyPlus – Mockup da Solução</title>
-  <style>
-    /* ── Reset & tokens ─────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Synergy+ SEPLAG — Protótipo</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F4F6FB;--card:#fff;--border:#E2E1D9;--border2:#D3D1C7;
+  --text:#2C2C2A;--muted:#5F5E5A;--ghost:#888780;
+  --blue:#185FA5;--blue-l:#E6F1FB;--blue-m:#378ADD;--blue-b:#B5D4F4;
+  --teal:#1D9E75;--teal-l:#E1F5EE;--teal-d:#085041;
+  --amber:#BA7517;--amber-l:#FAEEDA;
+  --purple:#534AB7;--purple-l:#EEEDFE;
+  --red:#A32D2D;--red-l:#FCEBEB;
+  --green:#3B6D11;--green-l:#EAF3DE;
+  --dark:#042C53;
+}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);font-size:14px;min-height:100vh}
 
-    :root {
-      --clr-bg:        #0f172a;
-      --clr-surface:   #1e293b;
-      --clr-border:    #334155;
-      --clr-primary:   #6366f1;
-      --clr-primary-h: #818cf8;
-      --clr-accent:    #22d3ee;
-      --clr-success:   #4ade80;
-      --clr-warn:      #fb923c;
-      --clr-text:      #e2e8f0;
-      --clr-muted:     #94a3b8;
-      --radius:        10px;
-      --shadow:        0 4px 24px rgba(0,0,0,.45);
-    }
+.nav{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;gap:12px}
+.nav-brand{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.nav-logo{width:28px;height:28px;background:var(--dark);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;font-weight:700}
+.nav-title{font-weight:600;font-size:15px}.nav-title span{color:var(--teal)}
+.nav-links{display:flex;gap:2px}
+.nav-btn{padding:6px 12px;border-radius:6px;border:none;background:none;font-size:13px;color:var(--muted);cursor:pointer;transition:background .15s,color .15s}
+.nav-btn:hover{background:var(--bg);color:var(--text)}
+.nav-btn.active{background:var(--blue-l);color:var(--blue);font-weight:600}
+.ava-sm{width:30px;height:30px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0}
 
-    body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      background: var(--clr-bg);
-      color: var(--clr-text);
-      min-height: 100vh;
-    }
+.page{display:none;padding:20px;max-width:940px;margin:0 auto}
+.page.active{display:block}
 
-    /* ── Top navigation ─────────────────────────────────────── */
-    nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 2rem;
-      height: 60px;
-      background: var(--clr-surface);
-      border-bottom: 1px solid var(--clr-border);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
+.banner{border-radius:12px;overflow:hidden;background:var(--dark);margin-bottom:22px;position:relative;min-height:140px}
+.b-slide{padding:26px 30px;display:none}
+.b-slide.active{display:block}
+.b-tag{display:inline-block;background:var(--teal);color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px}
+.b-title{font-size:19px;font-weight:600;color:#fff;margin-bottom:6px}
+.b-desc{font-size:13px;color:var(--blue-b);margin-bottom:14px;max-width:560px}
+.b-btn{background:#fff;color:var(--dark);border:none;padding:7px 16px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer}
+.b-dots{position:absolute;bottom:14px;right:16px;display:flex;gap:6px}
+.b-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.35);cursor:pointer;border:none;padding:0;transition:background .15s}
+.b-dot.active{background:#fff}
 
-    .nav-brand {
-      display: flex;
-      align-items: center;
-      gap: .6rem;
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: var(--clr-primary-h);
-      text-decoration: none;
-    }
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:22px}
+.stat{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+.stat-label{font-size:10px;color:var(--ghost);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.stat-val{font-size:24px;font-weight:700}
+.stat-val.blue{color:var(--blue)}.stat-val.teal{color:var(--teal)}.stat-val.amber{color:var(--amber)}.stat-val.purple{color:var(--purple)}
 
-    .nav-brand svg { width: 26px; height: 26px; }
+.sec-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.sec-title{font-size:15px;font-weight:600}
 
-    .nav-links { display: flex; gap: 1.5rem; }
-    .nav-links a {
-      color: var(--clr-muted);
-      text-decoration: none;
-      font-size: .9rem;
-      transition: color .2s;
-    }
-    .nav-links a:hover { color: var(--clr-text); }
+.search-wrap{display:flex;gap:8px;margin-bottom:14px}
+.search-wrap input{flex:1;padding:9px 14px;border:1px solid var(--border);border-radius:8px;font-size:14px;background:#fff;color:var(--text);outline:none;transition:border-color .15s}
+.search-wrap input:focus{border-color:var(--blue-m)}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.tag{padding:5px 12px;border-radius:20px;font-size:12px;cursor:pointer;border:1px solid var(--border2);background:#fff;color:var(--muted);transition:all .15s;white-space:nowrap}
+.tag:hover{border-color:var(--blue-m);color:var(--blue)}
+.tag.active{background:var(--blue-l);border-color:var(--blue-m);color:var(--blue);font-weight:600}
+.tipo-filters{display:flex;gap:6px;margin-bottom:14px}
 
-    .nav-cta {
-      background: var(--clr-primary);
-      color: #fff;
-      border: none;
-      padding: .45rem 1.1rem;
-      border-radius: var(--radius);
-      cursor: pointer;
-      font-size: .875rem;
-      font-weight: 600;
-      transition: background .2s;
-    }
-    .nav-cta:hover { background: var(--clr-primary-h); }
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.pcard{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px;cursor:pointer;transition:border-color .15s,box-shadow .15s}
+.pcard:hover{border-color:var(--blue-b);box-shadow:0 2px 12px rgba(55,138,221,.1)}
+.pcard-hd{display:flex;align-items:center;gap:11px;margin-bottom:11px}
+.ava{width:44px;height:44px;border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
+.pname{font-weight:600;font-size:14px;line-height:1.3}
+.prole{font-size:11px;color:var(--muted);margin-top:2px}
+.pills{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:9px}
+.pill{font-size:11px;padding:3px 8px;border-radius:20px}
+.pill.b{background:var(--blue-l);color:var(--blue)}
+.pill.t{background:var(--teal-l);color:var(--teal-d)}
+.pill.p{background:var(--purple-l);color:var(--purple)}
+.pill.a{background:var(--amber-l);color:var(--amber)}
+.bdg-row{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:2px}
+.bdg{width:22px;height:22px;border-radius:50%;border:1px solid var(--border);background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:12px;position:relative;cursor:default}
+.bdg-tt{display:none;position:absolute;bottom:26px;left:50%;transform:translateX(-50%);background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-size:10px;white-space:nowrap;z-index:10;color:var(--text)}
+.bdg:hover .bdg-tt{display:block}
+.tipo-pill{font-size:10px;padding:2px 7px;border-radius:20px;font-weight:600}
+.tipo-pill.sv{background:var(--blue-l);color:var(--blue)}
+.tipo-pill.es{background:var(--amber-l);color:var(--amber)}
+.tipo-pill.cd{background:var(--purple-l);color:var(--purple)}
+.pcard-ft{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.socials{display:flex;gap:6px}
+.soc{width:20px;height:20px;border-radius:4px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--muted);cursor:pointer}
+.match{font-size:11px;font-weight:600;color:var(--teal)}
 
-    /* ── Hero ───────────────────────────────────────────────── */
-    .hero {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      padding: 5rem 2rem 3rem;
-      gap: 1.2rem;
-      background: radial-gradient(ellipse 80% 60% at 50% -10%, #312e81 0%, transparent 70%);
-    }
+.feed{display:flex;flex-direction:column;gap:10px}
+.fpost{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px}
+.fpost-hd{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.fmeta{flex:1}
+.fauthor{font-weight:600;font-size:13px}
+.ftime{font-size:11px;color:var(--ghost)}
+.ftag{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px}
+.ftag.op{background:var(--green-l);color:var(--green)}
+.ftag.dv{background:var(--amber-l);color:var(--amber)}
+.ftag.ev{background:var(--blue-l);color:var(--blue)}
+.fbody{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:10px}
+.factions{display:flex;gap:14px}
+.fact{background:none;border:none;font-size:12px;color:var(--ghost);cursor:pointer}
+.fact:hover{color:var(--blue)}
 
-    .hero-badge {
-      background: rgba(99,102,241,.15);
-      border: 1px solid rgba(99,102,241,.35);
-      color: var(--clr-primary-h);
-      padding: .3rem .9rem;
-      border-radius: 999px;
-      font-size: .78rem;
-      font-weight: 600;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-    }
+.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.admin-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px}
+.admin-title{font-size:13px;font-weight:600;margin-bottom:14px}
+.bar-item{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.bar-lbl{font-size:12px;color:var(--muted);width:90px;text-align:right;flex-shrink:0}
+.bar-track{flex:1;height:8px;background:var(--bg);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px}
+.bar-cnt{font-size:12px;color:var(--ghost);min-width:24px}
+.tbl{width:100%;border-collapse:collapse;font-size:12px}
+.tbl th{text-align:left;padding:7px 10px;font-size:11px;font-weight:600;color:var(--ghost);border-bottom:1px solid var(--border);text-transform:uppercase;letter-spacing:.4px}
+.tbl td{padding:9px 10px;border-bottom:1px solid var(--border)}
+.tbl tr:last-child td{border-bottom:none}
+.sbadge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600}
+.sbadge.sv{background:var(--blue-l);color:var(--blue)}
+.sbadge.es{background:var(--amber-l);color:var(--amber)}
+.sbadge.cd{background:var(--purple-l);color:var(--purple)}
 
-    .hero h1 {
-      font-size: clamp(2rem, 5vw, 3.4rem);
-      line-height: 1.15;
-      max-width: 760px;
-    }
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:center;justify-content:center}
+.overlay.open{display:flex}
+.modal{background:#fff;border-radius:16px;padding:24px;max-width:460px;width:calc(100% - 32px);max-height:85vh;overflow-y:auto}
+.modal-hd{display:flex;justify-content:flex-end;margin-bottom:4px}
+.modal-x{background:none;border:none;font-size:20px;cursor:pointer;color:var(--ghost);line-height:1}
+.modal-ava{width:68px;height:68px;border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;margin:0 auto 12px}
+.modal-name{font-size:18px;font-weight:700;text-align:center;margin-bottom:4px}
+.modal-role{font-size:13px;color:var(--muted);text-align:center;margin-bottom:18px}
+.mlabel{font-size:10px;font-weight:700;color:var(--ghost);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.mval{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:14px}
+.affbar{height:6px;background:var(--bg);border-radius:4px;overflow:hidden;margin-top:4px}
+.affbar-fill{height:100%;background:var(--teal);border-radius:4px}
+.affrow{display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px}
+.contact-btn{width:100%;background:var(--blue);color:#fff;border:none;padding:11px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;margin-top:14px}
+.result-count{font-size:12px;color:var(--ghost);margin-bottom:12px}
+.compose-btn{background:var(--blue);color:#fff;border:none;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer}
+.empty{text-align:center;padding:48px 20px;color:var(--ghost);grid-column:1/-1}
+.empty-icon{font-size:36px;margin-bottom:12px}
 
-    .hero h1 span { color: var(--clr-primary-h); }
+.demo-badge{display:inline-block;background:var(--amber-l);color:var(--amber);font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:16px;border:1px solid var(--amber)}
 
-    .hero p {
-      color: var(--clr-muted);
-      font-size: 1.05rem;
-      max-width: 580px;
-      line-height: 1.6;
-    }
-
-    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-top: .5rem; }
-
-    .btn-primary {
-      background: var(--clr-primary);
-      color: #fff;
-      border: none;
-      padding: .7rem 1.6rem;
-      border-radius: var(--radius);
-      cursor: pointer;
-      font-size: .95rem;
-      font-weight: 600;
-      transition: background .2s, transform .15s;
-    }
-    .btn-primary:hover { background: var(--clr-primary-h); transform: translateY(-1px); }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--clr-text);
-      border: 1px solid var(--clr-border);
-      padding: .7rem 1.6rem;
-      border-radius: var(--radius);
-      cursor: pointer;
-      font-size: .95rem;
-      font-weight: 600;
-      transition: border-color .2s, transform .15s;
-    }
-    .btn-outline:hover { border-color: var(--clr-muted); transform: translateY(-1px); }
-
-    /* ── Dashboard preview ──────────────────────────────────── */
-    .preview-wrap {
-      display: flex;
-      justify-content: center;
-      padding: 0 2rem 4rem;
-    }
-
-    .dashboard {
-      width: 100%;
-      max-width: 1100px;
-      background: var(--clr-surface);
-      border: 1px solid var(--clr-border);
-      border-radius: 14px;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-
-    /* window chrome */
-    .window-bar {
-      display: flex;
-      align-items: center;
-      gap: .5rem;
-      padding: .75rem 1rem;
-      background: #0f172a;
-      border-bottom: 1px solid var(--clr-border);
-    }
-    .dot { width: 12px; height: 12px; border-radius: 50%; }
-    .dot-red   { background: #ef4444; }
-    .dot-yellow{ background: #eab308; }
-    .dot-green { background: #22c55e; }
-    .url-bar {
-      flex: 1;
-      background: var(--clr-surface);
-      border: 1px solid var(--clr-border);
-      border-radius: 6px;
-      padding: .25rem .75rem;
-      font-size: .78rem;
-      color: var(--clr-muted);
-      margin: 0 .5rem;
-    }
-
-    /* inner layout */
-    .dash-inner {
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      min-height: 480px;
-    }
-
-    .sidebar {
-      background: #0f172a;
-      border-right: 1px solid var(--clr-border);
-      padding: 1.2rem 0;
-      display: flex;
-      flex-direction: column;
-      gap: .15rem;
-    }
-
-    .sidebar-section {
-      font-size: .68rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      color: var(--clr-muted);
-      padding: .8rem 1rem .3rem;
-    }
-
-    .sidebar-item {
-      display: flex;
-      align-items: center;
-      gap: .6rem;
-      padding: .5rem 1rem;
-      font-size: .84rem;
-      color: var(--clr-muted);
-      cursor: pointer;
-      border-radius: 6px;
-      margin: 0 .4rem;
-      transition: background .15s, color .15s;
-    }
-    .sidebar-item:hover { background: var(--clr-surface); color: var(--clr-text); }
-    .sidebar-item.active {
-      background: rgba(99,102,241,.18);
-      color: var(--clr-primary-h);
-    }
-    .sidebar-item svg { width: 16px; height: 16px; flex-shrink: 0; }
-
-    /* main area */
-    .dash-main { padding: 1.5rem; display: flex; flex-direction: column; gap: 1.4rem; }
-
-    .dash-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .dash-header h2 { font-size: 1.15rem; font-weight: 700; }
-
-    .tag {
-      font-size: .72rem;
-      font-weight: 600;
-      padding: .2rem .6rem;
-      border-radius: 999px;
-    }
-    .tag-green  { background: rgba(74,222,128,.15); color: var(--clr-success); }
-    .tag-blue   { background: rgba(34,211,238,.15);  color: var(--clr-accent); }
-    .tag-orange { background: rgba(251,146,60,.15);  color: var(--clr-warn); }
-
-    /* KPI cards */
-    .kpi-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1rem;
-    }
-
-    .kpi-card {
-      background: #0f172a;
-      border: 1px solid var(--clr-border);
-      border-radius: var(--radius);
-      padding: 1rem 1.1rem;
-    }
-
-    .kpi-label {
-      font-size: .75rem;
-      color: var(--clr-muted);
-      margin-bottom: .4rem;
-    }
-
-    .kpi-value {
-      font-size: 1.55rem;
-      font-weight: 700;
-      line-height: 1;
-    }
-
-    .kpi-delta {
-      font-size: .75rem;
-      margin-top: .4rem;
-    }
-    .kpi-delta.up   { color: var(--clr-success); }
-    .kpi-delta.down { color: #f87171; }
-
-    /* Chart placeholder */
-    .chart-row {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 1rem;
-    }
-
-    .chart-box {
-      background: #0f172a;
-      border: 1px solid var(--clr-border);
-      border-radius: var(--radius);
-      padding: 1rem;
-    }
-
-    .chart-title {
-      font-size: .82rem;
-      font-weight: 600;
-      color: var(--clr-muted);
-      margin-bottom: 1rem;
-    }
-
-    /* fake bar chart */
-    .bar-chart { display: flex; align-items: flex-end; gap: .35rem; height: 90px; }
-    .bar {
-      flex: 1;
-      background: var(--clr-primary);
-      border-radius: 4px 4px 0 0;
-      opacity: .8;
-      transition: opacity .2s;
-    }
-    .bar:hover { opacity: 1; }
-    .bar.accent { background: var(--clr-accent); }
-
-    /* fake donut */
-    .donut-wrap { display: flex; flex-direction: column; align-items: center; gap: .8rem; }
-    .donut {
-      width: 90px; height: 90px;
-      border-radius: 50%;
-      background: conic-gradient(
-        var(--clr-primary) 0% 42%,
-        var(--clr-accent)  42% 65%,
-        var(--clr-success) 65% 84%,
-        var(--clr-warn)    84% 100%
-      );
-    }
-    .donut-legend { display: flex; flex-direction: column; gap: .35rem; width: 100%; }
-    .legend-item { display: flex; align-items: center; gap: .45rem; font-size: .73rem; color: var(--clr-muted); }
-    .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-
-    /* Activity table */
-    .table-box {
-      background: #0f172a;
-      border: 1px solid var(--clr-border);
-      border-radius: var(--radius);
-      overflow: hidden;
-    }
-
-    .table-head {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      padding: .65rem 1rem;
-      background: var(--clr-surface);
-      border-bottom: 1px solid var(--clr-border);
-      font-size: .72rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: .06em;
-      color: var(--clr-muted);
-    }
-
-    .table-row {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      padding: .65rem 1rem;
-      font-size: .82rem;
-      border-bottom: 1px solid var(--clr-border);
-      align-items: center;
-      transition: background .15s;
-    }
-    .table-row:last-child { border-bottom: none; }
-    .table-row:hover { background: rgba(255,255,255,.03); }
-
-    .avatar {
-      display: inline-flex;
-      align-items: center;
-      gap: .5rem;
-    }
-    .avatar-img {
-      width: 26px; height: 26px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: .65rem;
-      font-weight: 700;
-      color: #fff;
-      flex-shrink: 0;
-    }
-
-    /* ── Features section ───────────────────────────────────── */
-    .features {
-      padding: 4rem 2rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 3rem;
-    }
-
-    .section-label {
-      color: var(--clr-primary-h);
-      font-size: .8rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: .1em;
-    }
-
-    .section-title {
-      font-size: clamp(1.5rem, 3.5vw, 2.2rem);
-      font-weight: 700;
-      text-align: center;
-      max-width: 640px;
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.4rem;
-      width: 100%;
-      max-width: 1100px;
-    }
-
-    .feature-card {
-      background: var(--clr-surface);
-      border: 1px solid var(--clr-border);
-      border-radius: var(--radius);
-      padding: 1.6rem;
-      display: flex;
-      flex-direction: column;
-      gap: .75rem;
-      transition: border-color .2s, transform .2s;
-    }
-    .feature-card:hover {
-      border-color: var(--clr-primary);
-      transform: translateY(-3px);
-    }
-
-    .feature-icon {
-      width: 44px; height: 44px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(99,102,241,.15);
-    }
-    .feature-icon svg { width: 22px; height: 22px; color: var(--clr-primary-h); }
-
-    .feature-card h3 { font-size: 1rem; font-weight: 700; }
-    .feature-card p  { font-size: .875rem; color: var(--clr-muted); line-height: 1.55; }
-
-    /* ── Footer ─────────────────────────────────────────────── */
-    footer {
-      text-align: center;
-      padding: 2.5rem;
-      border-top: 1px solid var(--clr-border);
-      color: var(--clr-muted);
-      font-size: .82rem;
-    }
-    footer a { color: var(--clr-primary-h); text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
-
-    /* ── Responsive ─────────────────────────────────────────── */
-    @media (max-width: 768px) {
-      .dash-inner { grid-template-columns: 1fr; }
-      .sidebar    { display: none; }
-      .kpi-grid   { grid-template-columns: repeat(2, 1fr); }
-      .chart-row  { grid-template-columns: 1fr; }
-      .table-head,
-      .table-row  { grid-template-columns: 2fr 1fr 1fr; }
-      .table-head > :last-child,
-      .table-row  > :last-child { display: none; }
-      .nav-links  { display: none; }
-    }
-  </style>
+@media(max-width:600px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .admin-grid{grid-template-columns:1fr}
+  .nav-btn{padding:6px 8px;font-size:12px}
+}
+</style>
 </head>
 <body>
 
-<!-- ── Navigation ──────────────────────────────────────────── -->
-<nav>
-  <a class="nav-brand" href="#">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-    </svg>
-    SynergyPlus
-  </a>
-  <div class="nav-links">
-    <a href="#">Dashboard</a>
-    <a href="#">Projetos</a>
-    <a href="#">Equipe</a>
-    <a href="#">Relatórios</a>
+<nav class="nav">
+  <div class="nav-brand">
+    <div class="nav-logo">S+</div>
+    <span class="nav-title">Synergy<span>+</span> SEPLAG</span>
   </div>
-  <button class="nav-cta">Começar agora</button>
+  <div class="nav-links">
+    <button class="nav-btn active" onclick="goTo('home',this)">Home</button>
+    <button class="nav-btn" onclick="goTo('pessoas',this)">Pessoas</button>
+    <button class="nav-btn" onclick="goTo('feed',this)">Feed</button>
+    <button class="nav-btn" onclick="goTo('admin',this)">Dashboard</button>
+  </div>
+  <div class="ava-sm">👤</div>
 </nav>
 
-<!-- ── Hero ────────────────────────────────────────────────── -->
-<section class="hero">
-  <div class="hero-badge">🚀 Mockup — Versão 1.0</div>
-  <h1>Gerencie projetos com <span>sinergia real</span></h1>
-  <p>SynergyPlus é uma plataforma integrada de gestão de projetos, equipes e métricas — tudo em um único painel intuitivo.</p>
-  <div class="hero-actions">
-    <button class="btn-primary">Ver demonstração</button>
-    <button class="btn-outline">Saiba mais</button>
+<!-- HOME -->
+<div id="home" class="page active">
+  <div style="background:var(--amber-l);border:1px solid var(--amber);border-radius:8px;padding:10px 16px;margin-bottom:16px;font-size:12px;color:var(--amber);font-weight:600">
+    ⚡ Protótipo de demonstração — dados fictícios para fins ilustrativos · Synergy+ SEPLAG
   </div>
-</section>
-
-<!-- ── Dashboard Preview ────────────────────────────────────── -->
-<div class="preview-wrap">
-  <div class="dashboard">
-
-    <!-- browser chrome -->
-    <div class="window-bar">
-      <div class="dot dot-red"></div>
-      <div class="dot dot-yellow"></div>
-      <div class="dot dot-green"></div>
-      <div class="url-bar">app.synergyplus.io/dashboard</div>
+  <div class="banner">
+    <div class="b-slide active">
+      <div class="b-tag">Evento</div>
+      <div class="b-title">Desafio Seplag Tech 2026</div>
+      <div class="b-desc">Propostas de inovação para modernizar a gestão pública. Conheça os finalistas e vote na sua proposta favorita.</div>
+      <button class="b-btn">Saiba mais</button>
     </div>
-
-    <div class="dash-inner">
-      <!-- Sidebar -->
-      <aside class="sidebar">
-        <div class="sidebar-section">Principal</div>
-        <div class="sidebar-item active">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-          Dashboard
-        </div>
-        <div class="sidebar-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-          Tarefas
-        </div>
-        <div class="sidebar-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-          Equipe
-        </div>
-        <div class="sidebar-section">Análise</div>
-        <div class="sidebar-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-          Métricas
-        </div>
-        <div class="sidebar-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          Relatórios
-        </div>
-        <div class="sidebar-section">Sistema</div>
-        <div class="sidebar-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M2 12h2M20 12h2M19.07 19.07l-1.41-1.41M4.93 19.07l1.41-1.41M12 2v2M12 20v2"/></svg>
-          Configurações
-        </div>
-      </aside>
-
-      <!-- Main content -->
-      <main class="dash-main">
-        <div class="dash-header">
-          <h2>Visão Geral</h2>
-          <span class="tag tag-green">● Online</span>
-        </div>
-
-        <!-- KPI cards -->
-        <div class="kpi-grid">
-          <div class="kpi-card">
-            <div class="kpi-label">Projetos ativos</div>
-            <div class="kpi-value" style="color:var(--clr-primary-h)">24</div>
-            <div class="kpi-delta up">↑ 12% este mês</div>
-          </div>
-          <div class="kpi-card">
-            <div class="kpi-label">Tarefas concluídas</div>
-            <div class="kpi-value" style="color:var(--clr-success)">183</div>
-            <div class="kpi-delta up">↑ 8% esta semana</div>
-          </div>
-          <div class="kpi-card">
-            <div class="kpi-label">Membros da equipe</div>
-            <div class="kpi-value" style="color:var(--clr-accent)">47</div>
-            <div class="kpi-delta up">↑ 3 novos</div>
-          </div>
-          <div class="kpi-card">
-            <div class="kpi-label">Eficiência geral</div>
-            <div class="kpi-value" style="color:var(--clr-warn)">91%</div>
-            <div class="kpi-delta down">↓ 2% vs meta</div>
-          </div>
-        </div>
-
-        <!-- Charts -->
-        <div class="chart-row">
-          <div class="chart-box">
-            <div class="chart-title">Entregas por semana</div>
-            <div class="bar-chart">
-              <div class="bar"        style="height:45%"></div>
-              <div class="bar"        style="height:62%"></div>
-              <div class="bar accent" style="height:38%"></div>
-              <div class="bar"        style="height:78%"></div>
-              <div class="bar"        style="height:55%"></div>
-              <div class="bar accent" style="height:90%"></div>
-              <div class="bar"        style="height:70%"></div>
-              <div class="bar"        style="height:83%"></div>
-              <div class="bar accent" style="height:60%"></div>
-              <div class="bar"        style="height:95%"></div>
-              <div class="bar"        style="height:72%"></div>
-              <div class="bar accent" style="height:88%"></div>
-            </div>
-          </div>
-          <div class="chart-box">
-            <div class="chart-title">Distribuição de status</div>
-            <div class="donut-wrap">
-              <div class="donut"></div>
-              <div class="donut-legend">
-                <div class="legend-item"><div class="legend-dot" style="background:var(--clr-primary)"></div>Em andamento – 42%</div>
-                <div class="legend-item"><div class="legend-dot" style="background:var(--clr-accent)"></div>Revisão – 23%</div>
-                <div class="legend-item"><div class="legend-dot" style="background:var(--clr-success)"></div>Concluído – 19%</div>
-                <div class="legend-item"><div class="legend-dot" style="background:var(--clr-warn)"></div>Pendente – 16%</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Recent activity -->
-        <div class="table-box">
-          <div class="table-head">
-            <span>Projeto</span>
-            <span>Status</span>
-            <span>Prazo</span>
-            <span>Progresso</span>
-          </div>
-          <div class="table-row">
-            <div class="avatar">
-              <div class="avatar-img" style="background:#6366f1">AM</div>
-              Alpha Module
-            </div>
-            <span><span class="tag tag-green">Ativo</span></span>
-            <span style="color:var(--clr-muted);font-size:.8rem">15 Mai 2026</span>
-            <span style="color:var(--clr-success)">78%</span>
-          </div>
-          <div class="table-row">
-            <div class="avatar">
-              <div class="avatar-img" style="background:#0891b2">BP</div>
-              Beta Platform
-            </div>
-            <span><span class="tag tag-orange">Revisão</span></span>
-            <span style="color:var(--clr-muted);font-size:.8rem">02 Jun 2026</span>
-            <span style="color:var(--clr-warn)">53%</span>
-          </div>
-          <div class="table-row">
-            <div class="avatar">
-              <div class="avatar-img" style="background:#16a34a">CR</div>
-              Core Refactor
-            </div>
-            <span><span class="tag tag-blue">Em andamento</span></span>
-            <span style="color:var(--clr-muted);font-size:.8rem">30 Jun 2026</span>
-            <span style="color:var(--clr-accent)">34%</span>
-          </div>
-          <div class="table-row">
-            <div class="avatar">
-              <div class="avatar-img" style="background:#b45309">DS</div>
-              Data Sync
-            </div>
-            <span><span class="tag tag-green">Ativo</span></span>
-            <span style="color:var(--clr-muted);font-size:.8rem">20 Jul 2026</span>
-            <span style="color:var(--clr-success)">91%</span>
-          </div>
-        </div>
-      </main>
+    <div class="b-slide">
+      <div class="b-tag">Oportunidade</div>
+      <div class="b-title">Complete seu perfil no Synergy+</div>
+      <div class="b-desc">Apareça nas buscas por habilidade. Conecte-se com colegas de outros setores e amplie sua rede interna.</div>
+      <button class="b-btn">Completar perfil</button>
     </div>
+    <div class="b-slide">
+      <div class="b-tag">Formação</div>
+      <div class="b-title">Workshop: Power BI para Gestão Pública</div>
+      <div class="b-desc">Capacitação gratuita para servidores. Vagas limitadas — 10/06 e 11/06. Inscrições abertas até 01/06.</div>
+      <button class="b-btn">Garantir vaga</button>
+    </div>
+    <div class="b-dots" id="dots"></div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-label">Talentos mapeados</div><div class="stat-val blue">341</div></div>
+    <div class="stat"><div class="stat-label">Setores cobertos</div><div class="stat-val teal">8</div></div>
+    <div class="stat"><div class="stat-label">Habilidades únicas</div><div class="stat-val amber">40+</div></div>
+    <div class="stat"><div class="stat-label">Estagiários ativos</div><div class="stat-val purple">38</div></div>
+  </div>
+
+  <div class="sec-title" style="margin-bottom:14px">Perfis em destaque</div>
+  <div class="grid" id="home-grid"></div>
+</div>
+
+<!-- PESSOAS -->
+<div id="pessoas" class="page">
+  <div class="search-wrap">
+    <input type="text" id="searchInput" placeholder="Buscar por nome, habilidade, setor ou área…" oninput="filterPeople()">
+  </div>
+  <div class="tags" id="skillTags"></div>
+  <div class="tipo-filters" id="tipoFilters"></div>
+  <div class="result-count" id="result-count"></div>
+  <div class="grid" id="people-grid"></div>
+</div>
+
+<!-- FEED -->
+<div id="feed" class="page">
+  <div class="sec-hd">
+    <div class="sec-title">Feed da Comunidade</div>
+    <button class="compose-btn">+ Publicar</button>
+  </div>
+  <div class="feed" id="feed-list"></div>
+</div>
+
+<!-- ADMIN -->
+<div id="admin" class="page">
+  <div class="stats">
+    <div class="stat"><div class="stat-label">Total de pessoas</div><div class="stat-val blue">341</div></div>
+    <div class="stat"><div class="stat-label">Com e-mail cadastrado</div><div class="stat-val teal">287</div></div>
+    <div class="stat"><div class="stat-label">Perfis via Forms</div><div class="stat-val amber">0</div></div>
+    <div class="stat"><div class="stat-label">Aguardando cadastro</div><div class="stat-val purple">341</div></div>
+  </div>
+  <div class="admin-grid">
+    <div class="admin-card"><div class="admin-title">Distribuição por setor</div><div id="bar-setores"></div></div>
+    <div class="admin-card"><div class="admin-title">Top habilidades (pós-Forms)</div><div id="bar-skills"></div></div>
+  </div>
+  <div class="admin-card">
+    <div class="admin-title">Amostra de perfis — base demonstrativa</div>
+    <table class="tbl"><thead><tr><th>Nome</th><th>Setor</th><th>Tipo</th><th>Habilidades</th></tr></thead>
+    <tbody id="admin-tbl"></tbody></table>
   </div>
 </div>
 
-<!-- ── Features ─────────────────────────────────────────────── -->
-<section class="features">
-  <div class="section-label">Funcionalidades</div>
-  <h2 class="section-title">Tudo que você precisa para uma equipe de alta performance</h2>
-  <div class="features-grid">
+<!-- MODAL -->
+<div class="overlay" id="overlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modal-inner"></div>
+</div>
 
-    <div class="feature-card">
-      <div class="feature-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>
-      </div>
-      <h3>Gestão de Tarefas</h3>
-      <p>Crie, atribua e acompanhe tarefas em tempo real com visualizações Kanban, lista e calendário integradas.</p>
+<script>
+// ── 100% dados fictícios para demonstração ────────────────────
+const PEOPLE = [
+  // IGPE — Ciência de Dados / TI
+  {n:"Carlos Mendonça Braga",i:"CB",c:"185FA5",r:"IGPE/NCD",s:"IGPE",sk:["Python","Power BI","SQL"],a:"Ciência da Computação",t:"Servidor",b:["⚡","🏆"],li:true,gh:true,af:92,desc:"Analista de dados no IGPE. Especialista em Python e visualização com Power BI aplicados à gestão pública."},
+  {n:"Fernanda Queiroz Leal",i:"FL",c:"1D9E75",r:"IGPE/NCD",s:"IGPE",sk:["Ciência de Dados","Machine Learning","R"],a:"Estatística",t:"Servidor",b:["🔬","📊"],li:true,gh:true,af:88,desc:"Estatística no IGPE. Desenvolve modelos preditivos para otimização de processos internos."},
+  {n:"Rodrigo Saraiva Lima",i:"RL",c:"534AB7",r:"IGPE/NGC",s:"IGPE",sk:["React","Node.js","APIs"],a:"Eng. de Software",t:"Estagiário",b:["🛠️","⚡"],li:true,gh:true,af:85,desc:"Estagiário de Engenharia de Software. Desenvolve interfaces e integrações via APIs REST."},
+  {n:"Beatriz Cavalcante Mota",i:"BM",c:"0F6E56",r:"IGPE/NGC",s:"IGPE",sk:["Automação","Apps Script","Google Workspace"],a:"Sistemas de Informação",t:"Servidor",b:["💡","🎯"],li:false,gh:true,af:79,desc:"Especialista em automação de processos com Google Workspace e Apps Script no IGPE."},
+  {n:"Tiago Alencar Fonseca",i:"TF",c:"E24B4A",r:"IGPE/NCD",s:"IGPE",sk:["BI","ETL","Data Warehouse"],a:"Ciência da Computação",t:"Cedido",b:["📊","🏆"],li:true,gh:false,af:75,desc:"Especialista em Business Intelligence cedido ao IGPE. Foco em ETL e soluções de Data Warehouse."},
+  {n:"Marina Duarte Vieira",i:"MV",c:"BA7517",r:"IGPE",s:"IGPE",sk:["Ciência de Dados","Python","SQL"],a:"Matemática",t:"Estagiário",b:["🔬"],li:true,gh:true,af:68,desc:"Estagiária de Matemática. Atua com modelagem estatística e visualização de dados no IGPE."},
+
+  // SECOGE — Finanças / Contabilidade
+  {n:"Rafael Drummond Costa",i:"RC",c:"D85A30",r:"SECOGE/GFIN",s:"SECOGE",sk:["Excel Avançado","SQL","BI"],a:"Ciências Contábeis",t:"Servidor",b:["🏆","📚","⚡"],li:false,gh:false,af:70,desc:"Contador no SECOGE/GFIN. Especialista em análise financeira, Excel avançado e Business Intelligence."},
+  {n:"Larissa Magalhães Pinto",i:"LP",c:"378ADD",r:"SECOGE/SUGESPE",s:"SECOGE",sk:["Orçamento","LRF","Análise de Dados"],a:"Finanças Públicas",t:"Servidor",b:["🏆","📊"],li:false,gh:false,af:82,desc:"Especialista em Orçamento Público. Foco em Lei de Responsabilidade Fiscal e análise de dados financeiros."},
+  {n:"Eduardo Siqueira Fontes",i:"EF",c:"7F77DD",r:"SECOGE/GGADM",s:"SECOGE",sk:["Gestão Pública","Controladoria","Relatórios"],a:"Administração",t:"Cedido",b:["🎯","🏆"],li:false,gh:false,af:65,desc:"Administrador cedido ao SECOGE. Foco em Controladoria e relatórios de gestão estratégica."},
+  {n:"Patrícia Vilarinho Ramos",i:"PR",c:"639922",r:"SECOGE/GFIN",s:"SECOGE",sk:["SIAFEM","Excel Avançado","Contabilidade"],a:"Ciências Contábeis",t:"Servidor",b:["📋","🌟"],li:true,gh:false,af:74,desc:"Contadora no SECOGE/GFIN. Especialista em SIAFEM e controle contábil da despesa pública."},
+  {n:"Henrique Borba Melo",i:"HM",c:"E24B4A",r:"SECOGE",s:"SECOGE",sk:["Excel Avançado","Power BI","Gestão Financeira"],a:"Economia",t:"Estagiário",b:["⚡"],li:false,gh:false,af:61,desc:"Estagiário de Economia. Apoia análise financeira e construção de dashboards no SECOGE."},
+  {n:"Camila Torres Nogueira",i:"CN",c:"185FA5",r:"SECOGE/SUGESPE",s:"SECOGE",sk:["Orçamento","Controladoria","LRF"],a:"Finanças Públicas",t:"Servidor",b:["📚","🎯","🏆"],li:false,gh:false,af:90,desc:"Especialista em Orçamento e Controladoria no SECOGE. Ampla experiência com LRF e relatórios fiscais."},
+
+  // SEDRC — Desenvolvimento Regional
+  {n:"André Lopes Wanderley",i:"AW",c:"1D9E75",r:"SEDRC",s:"SEDRC",sk:["Políticas Públicas","Pesquisa","IBGE"],a:"Economia",t:"Servidor",b:["📚","🎯","🎨"],li:false,gh:false,af:77,desc:"Economista na SEDRC. Especialista em políticas públicas e análise de dados socioeconômicos do IBGE."},
+  {n:"Juliana Barros Esteves",i:"JE",c:"534AB7",r:"SEDRC/FEM",s:"SEDRC",sk:["Geoprocessamento","QGIS","Estatística"],a:"Geografia",t:"Servidor",b:["🏆","⚡"],li:true,gh:false,af:83,desc:"Geógrafa na SEDRC/FEM. Especialista em Geoprocessamento e análise espacial com QGIS."},
+  {n:"Lucas Monteiro Freire",i:"LF",c:"0F6E56",r:"SEDRC",s:"SEDRC",sk:["Análise Econômica","Python","Dados"],a:"Urbanismo",t:"Estagiário",b:["🎯"],li:true,gh:false,af:94,desc:"Estagiário de Urbanismo. Usa Python para análise econômica em projetos de desenvolvimento regional."},
+  {n:"Débora Assunção Pires",i:"DP",c:"BA7517",r:"SEDRC",s:"SEDRC",sk:["Planejamento Urbano","CAD","Excel"],a:"Engenharia Civil",t:"Servidor",b:["📚","📊","🏆"],li:false,gh:true,af:71,desc:"Engenheira Civil na SEDRC. Foco em planejamento urbano e modelagem territorial com CAD."},
+  {n:"Igor Nascimento Cavalcanti",i:"IC",c:"378ADD",r:"SEDRC/FEM",s:"SEDRC",sk:["Políticas Públicas","Pesquisa","IBGE"],a:"Ciências Sociais",t:"Servidor",b:["⚡","✨","📚"],li:true,gh:true,af:67,desc:"Cientista Social na SEDRC/FEM. Pesquisador de políticas públicas com ênfase em desenvolvimento regional."},
+
+  // SEGPR — Gestão de Pessoas
+  {n:"Vanessa Araújo Campos",i:"VC",c:"D85A30",r:"SEGPR/NGR-PS",s:"SEGPR",sk:["Capacitação","EAD","Treinamento"],a:"Pedagogia",t:"Servidor",b:["🔬","💡"],li:true,gh:false,af:69,desc:"Pedagoga no SEGPR. Coordena programas de capacitação presencial e a distância para servidores."},
+  {n:"Bruno Lacerda Tavares",i:"BT",c:"7F77DD",r:"SEGPR/NGR-SEE",s:"SEGPR",sk:["ERGON","Excel","Gestão de Pessoas"],a:"Administração",t:"Cedido",b:["⚡"],li:true,gh:true,af:87,desc:"Administrador cedido ao SEGPR. Especialista em ERGON e folha de pagamento do serviço público."},
+  {n:"Aline Figueiredo Santana",i:"AS",c:"1D9E75",r:"SEGPR",s:"SEGPR",sk:["Legislação de Pessoal","Benefícios","SIAPE"],a:"Direito",t:"Servidor",b:["📋","🏆","📚"],li:false,gh:false,af:73,desc:"Advogada no SEGPR. Especialista em legislação de pessoal, benefícios e sistema SIAPE."},
+  {n:"Felipe Medeiros Guimarães",i:"FG",c:"534AB7",r:"SEGPR/NGR-JUS",s:"SEGPR",sk:["ERGON","Concursos","Seleção"],a:"Gestão de RH",t:"Estagiário",b:["💡","📊"],li:true,gh:false,af:81,desc:"Estagiário de Gestão de RH. Apoia processos seletivos e alimentação do ERGON no SEGPR."},
+  {n:"Renata Coelho Bezerra",i:"RB",c:"639922",r:"SEGPR/NGR-SDS",s:"SEGPR",sk:["RH","Folha de Pagamento","SIEPE"],a:"Psicologia",t:"Servidor",b:["📚","🛠️"],li:false,gh:false,af:78,desc:"Psicóloga no SEGPR. Atua em gestão de pessoas e processamento de folha de pagamento via SIEPE."},
+
+  // SEGES — Gestão de Serviços e Contratos
+  {n:"Thiago Andrade Queirós",i:"TQ",c:"E24B4A",r:"SEGES/GGPE",s:"SEGES",sk:["Compras Públicas","Licitação","COMPRAS.PE"],a:"Direito",t:"Servidor",b:["🏆","📋"],li:false,gh:false,af:64,desc:"Advogado no SEGES/GGPE. Especialista em compras públicas, pregão eletrônico e COMPRAS.PE."},
+  {n:"Isabela Brito Vasconcelos",i:"IV",c:"0F6E56",r:"SEGES/EGP",s:"SEGES",sk:["Gestão de Contratos","Fiscalização","TCEPE"],a:"Engenharia",t:"Servidor",b:["🌟","🎨"],li:true,gh:false,af:91,desc:"Engenheira no SEGES/EGP. Especialista em gestão e fiscalização de contratos de obras e serviços."},
+  {n:"Gustavo Pereira Nunes",i:"GN",c:"534AB7",r:"SEGES/GGGE",s:"SEGES",sk:["Almoxarifado","Patrimônio","SIPAT"],a:"Logística",t:"Estagiário",b:["📋","🎨","🏆"],li:false,gh:true,af:76,desc:"Estagiário de Logística. Apoia controle patrimonial e de almoxarifado no SEGES."},
+  {n:"Mariana Lins Cavalcanti",i:"MC",c:"BA7517",r:"SEGES/GMIE",s:"SEGES",sk:["Contratos","Gestão de Fornecedores","Legislação"],a:"Administração",t:"Servidor",b:["📊","🎨"],li:false,gh:true,af:72,desc:"Administradora no SEGES/GMIE. Foco em gestão de fornecedores e controle contratual."},
+
+  // SEPO — Planejamento e Orçamento
+  {n:"Amanda Ferreira Saldanha",i:"AF",c:"185FA5",r:"SEPO/ORCAMENTO",s:"SEPO",sk:["Planejamento Estratégico","OKR","BSC"],a:"Ciências Sociais",t:"Estagiário",b:["✨"],li:true,gh:true,af:80,desc:"Estagiária de Ciências Sociais no SEPO. Trabalha com planejamento estratégico e metodologias OKR."},
+  {n:"Leonardo Paz Frazão",i:"LF",c:"D85A30",r:"SEPO",s:"SEPO",sk:["Monitoramento","Indicadores","Power BI"],a:"Economia",t:"Servidor",b:["🎨","📊","🏆"],li:false,gh:false,af:86,desc:"Economista no SEPO. Especialista em monitoramento de indicadores e dashboards com Power BI."},
+  {n:"Natália Cristina Borges",i:"NB",c:"7F77DD",r:"SEPO",s:"SEPO",sk:["Avaliação de Políticas","Dados","Evidências"],a:"Administração",t:"Servidor",b:["📚","🌟"],li:true,gh:false,af:79,desc:"Administradora no SEPO. Trabalha com avaliação de políticas públicas baseadas em evidências."},
+  {n:"Daniel Menezes Correia",i:"DC",c:"1D9E75",r:"SEPO/ORCAMENTO",s:"SEPO",sk:["Gestão de Projetos","Scrum","Kanban"],a:"Eng. de Produção",t:"Cedido",b:["🛠️","⚡"],li:true,gh:true,af:88,desc:"Engenheiro de Produção cedido ao SEPO. Especialista em gestão ágil de projetos e PMO."},
+
+  // CEDIDA — Servidores cedidos de outros órgãos
+  {n:"Priscila Ramos Lacerda",i:"PL",c:"E24B4A",r:"CEDIDA",s:"CEDIDA",sk:["Direito","Legislação","Compliance"],a:"Direito",t:"Cedido",b:["📋","🏆"],li:true,gh:false,af:69,desc:"Advogada cedida à SEPLAG. Especialista em compliance e legislação aplicada ao setor público."},
+  {n:"Marcos Vinícius Souza",i:"MS",c:"378ADD",r:"CEDIDO",s:"CEDIDA",sk:["Comunicação","Redação Oficial","Atendimento"],a:"Comunicação",t:"Cedido",b:["✨"],li:false,gh:false,af:74,desc:"Jornalista cedido à SEPLAG. Foco em comunicação institucional e redação oficial."},
+  {n:"Tatiane Fonseca Braga",i:"TB",c:"639922",r:"CEDIDA",s:"CEDIDA",sk:["Gestão de Contratos","Licitação","COMPRAS.PE"],a:"Administração",t:"Cedido",b:["🛠️","🔬"],li:false,gh:false,af:83,desc:"Administradora cedida. Especialista em licitações e gestão de contratos públicos."},
+  {n:"Jonatas Ribeiro Mendes",i:"JM",c:"0F6E56",r:"CEDIDO",s:"CEDIDA",sk:["Planejamento","Gestão de Projetos","Scrum"],a:"Eng. de Produção",t:"Cedido",b:["💡","📊"],li:true,gh:true,af:91,desc:"Engenheiro de Produção cedido à SEPLAG. Especialista em planejamento e gestão ágil de projetos."},
+  {n:"Gabriela Lemos Torres",i:"GT",c:"534AB7",r:"CEDIDA",s:"CEDIDA",sk:["TI","Suporte","Redes"],a:"Tecnologia da Informação",t:"Cedido",b:["⚡","🛠️"],li:true,gh:true,af:76,desc:"Analista de TI cedida. Suporte técnico e infraestrutura de redes para a SEPLAG."},
+
+  // GABINETE — Comunicação e Assessoria
+  {n:"Vinícius Machado Esteves",i:"VE",c:"BA7517",r:"GABINETE/NICOM",s:"GABINETE",sk:["Comunicação Social","Redes Sociais","Imprensa"],a:"Jornalismo",t:"Servidor",b:["📋","🌟"],li:true,gh:false,af:62,desc:"Jornalista no Gabinete/NICOM. Responsável pela comunicação institucional e gerenciamento de imprensa."},
+  {n:"Rebeca Andrade Neves",i:"RN",c:"D85A30",r:"GABINETE",s:"GABINETE",sk:["Redação Oficial","Cerimonial","Protocolo"],a:"Relações Públicas",t:"Servidor",b:["🔬","📚"],li:true,gh:false,af:58,desc:"Relações-públicas no Gabinete. Foco em cerimonial, protocolo e redação oficial."},
+  {n:"Cláudio Ferraz Duarte",i:"CD",c:"7F77DD",r:"GABINETE/NICOM",s:"GABINETE",sk:["Gestão","Coordenação","Relações Institucionais"],a:"Administração",t:"Servidor",b:["✨","⚡","🎨"],li:true,gh:true,af:70,desc:"Administrador no Gabinete. Foco em coordenação e relações institucionais com outros órgãos."},
+  {n:"Sofia Ramos Pereira",i:"SP",c:"185FA5",r:"GABINETE",s:"GABINETE",sk:["Comunicação Social","Redes Sociais","Imprensa"],a:"Comunicação",t:"Estagiário",b:["🌟","🛠️"],li:true,gh:true,af:65,desc:"Estagiária de Comunicação no Gabinete. Apoia gestão de redes sociais e cobertura de imprensa."},
+];
+
+const TIPOS_MAP = {Servidor:'sv',Estagiário:'es',Cedido:'cd'};
+const PCOLS = ['b','t','p','a'];
+
+let activeSkill = null, activeTipo = 'Todos';
+let slideIdx = 0;
+
+// ── Banner ─────────────────────────────────────────
+function buildDots(){
+  document.getElementById('dots').innerHTML=[0,1,2].map(i=>`<button class="b-dot${i===0?' active':''}" onclick="goSlide(${i})"></button>`).join('');
+}
+function goSlide(i){
+  document.querySelectorAll('.b-slide').forEach((s,j)=>s.classList.toggle('active',j===i));
+  document.querySelectorAll('.b-dot').forEach((d,j)=>d.classList.toggle('active',j===i));
+  slideIdx=i;
+}
+setInterval(()=>goSlide((slideIdx+1)%3),4500);
+
+// ── Nav ───────────────────────────────────────────
+function goTo(page,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(page).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+}
+
+// ── Card ─────────────────────────────────────────
+function buildCard(p, clickIdx){
+  const tipo = TIPOS_MAP[p.t]||'sv';
+  const pills = p.sk.slice(0,3).map((s,i)=>`<span class="pill ${PCOLS[i%4]}">${s}</span>`).join('');
+  const bdgs = p.b.map(b=>`<div class="bdg">${b}<div class="bdg-tt">Badge Seplag Tech</div></div>`).join('');
+  const soc = (p.li?`<div class="soc">in</div>`:'')+(p.gh?`<div class="soc">gh</div>`:'');
+  return `<div class="pcard" onclick="openModal(${clickIdx})">
+    <div class="pcard-hd">
+      <div class="ava" style="background:#${p.c}">${p.i}</div>
+      <div><div class="pname">${p.n}</div><div class="prole">${p.r} · ${p.s}</div></div>
     </div>
-
-    <div class="feature-card">
-      <div class="feature-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-      </div>
-      <h3>Analytics Avançado</h3>
-      <p>Painéis interativos com métricas de produtividade, gráficos de burndown e relatórios customizáveis.</p>
+    <div class="pills">${pills}</div>
+    <div class="bdg-row">${bdgs}<span class="tipo-pill ${tipo}" style="margin-left:4px;line-height:22px">${p.t}</span></div>
+    <div class="pcard-ft">
+      <div class="socials">${soc}</div>
+      <span class="match">${p.af}% afinidade</span>
     </div>
+  </div>`;
+}
 
-    <div class="feature-card">
-      <div class="feature-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+function renderGrid(id, list){
+  const g = document.getElementById(id);
+  if(!list.length){
+    g.innerHTML=`<div class="empty"><div class="empty-icon">🔍</div><div>Nenhum perfil encontrado.</div></div>`;
+    return;
+  }
+  g.innerHTML = list.map((p,i)=>buildCard(p,i)).join('');
+}
+
+// ── Home ─────────────────────────────────────────
+function buildHome(){
+  const picks = [PEOPLE[0], PEOPLE[12], PEOPLE[6]];
+  const origIdxs = picks.map(p=>PEOPLE.indexOf(p));
+  document.getElementById('home-grid').innerHTML = picks.map((p,i)=>buildCard(p,origIdxs[i])).join('');
+}
+
+// ── Filtros ───────────────────────────────────────
+function buildFilters(){
+  const allSkills = [...new Set(PEOPLE.flatMap(p=>p.sk))].sort();
+  document.getElementById('skillTags').innerHTML =
+    ['Todas as habilidades',...allSkills].map(t=>`<button class="tag${t==='Todas as habilidades'?' active':''}" onclick="setSkill('${t}',this)">${t}</button>`).join('');
+  document.getElementById('tipoFilters').innerHTML =
+    ['Todos','Servidor','Estagiário','Cedido'].map(t=>`<button class="tag${t==='Todos'?' active':''}" style="border-radius:6px" onclick="setTipo('${t}',this)">${t}</button>`).join('');
+}
+
+function setSkill(tag,el){
+  document.querySelectorAll('#skillTags .tag').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  activeSkill = tag==='Todas as habilidades'?null:tag;
+  filterPeople();
+}
+function setTipo(tipo,el){
+  document.querySelectorAll('#tipoFilters .tag').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  activeTipo=tipo;
+  filterPeople();
+}
+
+function filterPeople(){
+  const q = (document.getElementById('searchInput')||{}).value?.toLowerCase()||'';
+  const list = PEOPLE.filter(p=>{
+    const mQ = !q || p.n.toLowerCase().includes(q)||p.sk.some(s=>s.toLowerCase().includes(q))||p.s.toLowerCase().includes(q)||p.a.toLowerCase().includes(q)||p.r.toLowerCase().includes(q);
+    const mS = !activeSkill||p.sk.includes(activeSkill);
+    const mT = activeTipo==='Todos'||p.t===activeTipo;
+    return mQ&&mS&&mT;
+  });
+  const rc = document.getElementById('result-count');
+  if(rc) rc.textContent=`${list.length} ${list.length===1?'pessoa':'pessoas'} encontrada${list.length===1?'':'s'}`;
+  const g = document.getElementById('people-grid');
+  if(!list.length){g.innerHTML=`<div class="empty"><div class="empty-icon">🔍</div><div>Nenhum perfil encontrado. Tente outro filtro.</div></div>`;return;}
+  g.innerHTML = list.map((p,i)=>buildCard(p,i)).join('');
+  g.querySelectorAll('.pcard').forEach((el,i)=>{el.onclick=()=>openModal(PEOPLE.indexOf(list[i]));});
+}
+
+// ── Modal ─────────────────────────────────────────
+function openModal(idx){
+  const p = PEOPLE[idx];
+  const tipo = TIPOS_MAP[p.t]||'sv';
+  const pills = p.sk.map((s,i)=>`<span class="pill ${PCOLS[i%4]}">${s}</span>`).join('');
+  const bdgs = p.b.map(b=>`<div class="bdg" style="width:28px;height:28px;font-size:15px">${b}</div>`).join('');
+  document.getElementById('modal-inner').innerHTML=`
+    <div class="modal-hd"><button class="modal-x" onclick="closeModal()">×</button></div>
+    <div class="modal-ava" style="background:#${p.c}">${p.i}</div>
+    <div class="modal-name">${p.n}</div>
+    <div class="modal-role">${p.r} · ${p.s} · <span class="tipo-pill ${tipo}">${p.t}</span></div>
+    <div class="mlabel">Sobre</div><div class="mval">${p.desc}</div>
+    <div class="mlabel">Habilidades</div><div class="pills" style="margin-bottom:14px">${pills}</div>
+    <div class="mlabel">Área de Formação</div><div class="mval">${p.a}</div>
+    <div class="mlabel">Badges</div><div class="bdg-row" style="margin-bottom:14px">${bdgs}</div>
+    <div class="mlabel">Afinidade com seu perfil</div>
+    <div class="affrow"><span>Compatibilidade de habilidades</span><strong style="color:var(--teal)">${p.af}%</strong></div>
+    <div class="affbar"><div class="affbar-fill" style="width:${p.af}%"></div></div>
+    <button class="contact-btn">📧 Entrar em contato via plataforma</button>`;
+  document.getElementById('overlay').classList.add('open');
+}
+function closeModal(){document.getElementById('overlay').classList.remove('open');}
+
+// ── Feed ─────────────────────────────────────────
+const POSTS=[
+  {i:"CB",c:"185FA5",au:"Analista — IGPE/NCD",time:"há 1h",type:"op",tl:"oportunidade",body:"Estou montando equipe para o Desafio Seplag Tech! Preciso de alguém com expertise em UX/Design ou Comunicação para a apresentação. Quem tiver interesse, me encontra na plataforma!",lk:18,cm:7},
+  {i:"JE",c:"534AB7",au:"Geógrafa — SEDRC/FEM",time:"há 3h",type:"dv",tl:"dúvida",body:"Alguém aqui trabalhou com dados do IBGE cruzados com QGIS para desenvolvimento regional? Estou montando um painel e adoraria trocar experiências com quem já passou por isso.",lk:11,cm:9},
+  {i:"BM",c:"0F6E56",au:"Analista — IGPE/NGC",time:"há 6h",type:"ev",tl:"evento",body:"Participei do workshop de Automação com Google Workspace ontem — incrível! Para quem quer começar com Apps Script, posso compartilhar os materiais e tirar dúvidas. Só chamar!",lk:26,cm:14},
+  {i:"PL",c:"E24B4A",au:"Advogada — CEDIDA",time:"ontem",type:"op",tl:"oportunidade",body:"Preciso de ajuda com revisão de contrato com cláusula técnica de TI. Algum colega do SEGES ou do Jurídico com experiência em contratos de tecnologia disponível?",lk:6,cm:3},
+  {i:"AF",c:"185FA5",au:"Estagiária — SEPO/ORCAMENTO",time:"ontem",type:"dv",tl:"dúvida",body:"Quais ferramentas vocês usam para avaliação de políticas além do Excel? Estou pesquisando R e Python mas quero saber a experiência prática de quem já usou aqui na SEPLAG.",lk:14,cm:11},
+];
+function buildFeed(){
+  document.getElementById('feed-list').innerHTML=POSTS.map(p=>`
+    <div class="fpost">
+      <div class="fpost-hd">
+        <div class="ava-sm" style="background:#${p.c}">${p.i}</div>
+        <div class="fmeta">
+          <span class="fauthor">${p.au}</span> <span class="ftag ${p.type}">${p.tl}</span>
+          <div class="ftime">${p.time}</div>
+        </div>
       </div>
-      <h3>Colaboração em Equipe</h3>
-      <p>Chat integrado, menções, comentários em tarefas e notificações em tempo real para manter todos sincronizados.</p>
-    </div>
-
-    <div class="feature-card">
-      <div class="feature-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <div class="fbody">${p.body}</div>
+      <div class="factions">
+        <button class="fact">♥ ${p.lk}</button>
+        <button class="fact">💬 ${p.cm}</button>
+        <button class="fact">↗ Compartilhar</button>
       </div>
-      <h3>Segurança Enterprise</h3>
-      <p>Controle de acesso por funções, autenticação SSO, logs de auditoria e criptografia end-to-end.</p>
-    </div>
+    </div>`).join('');
+}
 
-    <div class="feature-card">
-      <div class="feature-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/></svg>
-      </div>
-      <h3>Integrações</h3>
-      <p>Conecte com GitHub, Slack, Google Workspace, Jira, Trello e mais de 50 ferramentas via API REST.</p>
-    </div>
+// ── Admin ─────────────────────────────────────────
+function buildBars(id,data,max,color){
+  document.getElementById(id).innerHTML=data.map(d=>`
+    <div class="bar-item">
+      <span class="bar-lbl">${d.l}</span>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.round(d.v/max*100)}%;background:${color}"></div></div>
+      <span class="bar-cnt">${d.v}</span>
+    </div>`).join('');
+}
+function buildAdminTable(){
+  document.getElementById('admin-tbl').innerHTML=PEOPLE.slice(0,10).map(p=>`
+    <tr>
+      <td>${p.n}</td>
+      <td style="color:var(--muted)">${p.s}</td>
+      <td><span class="sbadge ${TIPOS_MAP[p.t]||'sv'}">${p.t}</span></td>
+      <td style="font-size:11px;color:var(--muted)">${p.sk.join(', ')}</td>
+    </tr>`).join('');
+}
 
-    <div class="feature-card">
-      <div class="feature-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-      </div>
-      <h3>Multi-plataforma</h3>
-      <p>Acesse pelo navegador, app desktop (Windows, macOS, Linux) e aplicativo móvel (iOS e Android).</p>
-    </div>
-
-  </div>
-</section>
-
-<!-- ── Footer ───────────────────────────────────────────────── -->
-<footer>
-  <p>© 2026 SynergyPlus · Mockup gerado para demonstração · <a href="https://github.com/Monkius-Maximus/SynergyPlusrepositorio">GitHub</a></p>
-</footer>
-
+// ── Init ──────────────────────────────────────────
+buildDots();
+buildHome();
+buildFilters();
+filterPeople();
+buildFeed();
+buildBars('bar-setores',[
+  {l:'SECOGE',v:90},{l:'CEDIDA',v:71},{l:'SEDRC',v:42},
+  {l:'SEGPR',v:38},{l:'SEGES',v:32},{l:'IGPE',v:29},
+  {l:'SEPO',v:24},{l:'GABINETE',v:15}
+],90,'#378ADD');
+buildBars('bar-skills',[
+  {l:'Power BI',v:42},{l:'Excel Avanç.',v:38},{l:'Gestão Proj.',v:35},
+  {l:'Python',v:29},{l:'Licitação',v:27},{l:'Pol. Públicas',v:24},
+  {l:'Contratos',v:22},{l:'ERGON',v:18}
+],42,'#1D9E75');
+buildAdminTable();
+</script>
 </body>
 </html>
